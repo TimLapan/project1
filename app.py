@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from datetime import datetime
+from flask_frozen import Freezer
 
 app = Flask(__name__)
 
@@ -15,5 +16,8 @@ def submit():
     age = today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
     return render_template('greeting.html', age=age, dob=dob)
 
+# Подразумевается, что 'app' ваш Flask app объект
+freezer = Freezer(app)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    freezer.freeze()
